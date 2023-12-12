@@ -1,1 +1,1 @@
-print('Got test!')
+print('Git test!')
