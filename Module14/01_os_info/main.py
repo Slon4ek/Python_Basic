@@ -6,6 +6,7 @@ info = 'OS info is \n{}\n\nPython version is {} {}'.format(
     sys.version,
     platform.architecture(),
 )
+
 print('Системная информация:')
 print(info)
 
