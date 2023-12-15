@@ -1,6 +1,11 @@
-vcard_list = [3070, 2060, 3090, 3070, 3090]
+vcard_count = int(input('Введите количество видеокарт: '))
+vcard_list = []
 new_vcard_list = []
 max_ID = max(vcard_list)
+
+for _ in range(vcard_count):
+    print('Введите модель видеокарты:', end=' ')
+    vcard_list.append(int(input()))
 
 print(f'Количество видеокарт: {len(vcard_list)}')
 
