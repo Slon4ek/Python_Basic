@@ -7,6 +7,10 @@ for _ in range(num_count):
     numbers_list.append(int(input()))
 
 shift = int(input('Сдвиг: '))
+while shift > num_count:
+    print(f'Сдвиг не может быть больше кол-ва чисел ({num_count})')
+    shift = int(input('Сдвиг: '))
+
 index = - shift
 
 for _ in range(num_count):
