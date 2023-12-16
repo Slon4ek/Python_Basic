@@ -6,5 +6,3 @@ if user_word == revers_word:
     print('Слово является палиндромом')
 else:
     print('Слово не является палиндромом')
-
-print(f'{user_word}\n{revers_word}')

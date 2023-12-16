@@ -13,4 +13,5 @@ for _ in range(num_count):
     new_numbers_list.append(numbers_list[index])
     index += 1
 
-print(new_numbers_list)
+print(f'Изначальный список: {numbers_list}\nСдвинутый список: {new_numbers_list}')
+
