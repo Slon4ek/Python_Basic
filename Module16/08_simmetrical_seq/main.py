@@ -3,7 +3,7 @@ numbers = [int(input('Введите число: ')) for _ in range(num_quantity
 add_nums = []
 
 if numbers == numbers[::-1]:
-    print('Последовательность симметрична, ничего добавлять не нужно.')
+    print(f'Последовательность {numbers} симметрична, ничего добавлять не нужно.')
 else:
     for i_num in range(0, len(numbers)):
         if numbers[i_num:] == numbers[:i_num - 1: -1]:
