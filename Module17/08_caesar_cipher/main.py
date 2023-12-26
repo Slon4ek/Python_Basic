@@ -14,4 +14,4 @@ alphabet.insert(6, 'ё')
 
 user_txt = input('Введите сообщение: ')
 user_shift = int(input('Введите сдвиг: '))
-print(encryption(user_txt, user_shift))
+print(f'Зашифрованное сообщение: "{encryption(user_txt, user_shift)}"')
