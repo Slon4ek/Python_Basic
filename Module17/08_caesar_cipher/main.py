@@ -3,15 +3,13 @@ def encryption(txt, shift):
                    if letter != ' '
                    else ' ')
                    for letter in txt]
-    encryption_txt = ''
-    for i_let in letter_list:
-        encryption_txt += i_let
+    encryption_txt = ''.join(letter_list)
     return encryption_txt
 
 
 alphabet = [chr(i) for i in range(ord('а'), ord('я') + 1)]
 alphabet.insert(6, 'ё')
 
-user_txt = input('Введите сообщение: ')
+user_txt = input('Введите сообщение: ').lower()
 user_shift = int(input('Введите сдвиг: '))
 print(f'Зашифрованное сообщение: "{encryption(user_txt, user_shift)}"')
