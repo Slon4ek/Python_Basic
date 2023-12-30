@@ -1,4 +1,7 @@
-# TODO здесь писать код
+def count_uppercase_lowercase(txt):
+    upper = [sym for sym in txt if sym.isupper()]
+    lower = [sym for sym in txt if sym.islower()]
+    return len(upper), len(lower)
 
 
 # Пример использования:
