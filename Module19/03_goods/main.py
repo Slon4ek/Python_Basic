@@ -1,3 +1,12 @@
+def create_total_dict(dictionary, d_key):
+    total_quantity = 0
+    total_price = 0
+    for item in dictionary[d_key]:
+        total_quantity += item['quantity']
+        total_price += item['quantity'] * item['price']
+    return total_quantity, total_price
+
+
 goods = {
     'Лампа': '12345',
     'Стол': '23456',
@@ -24,4 +33,6 @@ store = {
     ],
 }
 
-# TODO здесь писать код
+for key, val in goods.items():
+    quantity, price = create_total_dict(store, val)
+    print(f'{key} - {quantity} штук, стоимость {price} рублей')
