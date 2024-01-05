@@ -11,16 +11,22 @@ def synonym(word, dictionary):
     for key, val in dictionary.items():
         if word == key:
             print(f'Синоним: {val.title()}')
-        else:
+            break
+        if word == val:
             print(f'Синоним: {key.title()}')
+            break
 
 
-synonym_dict = dict()
+def create_synonym_dict(count):
+    dictionary = dict()
+    for num in range(1, count + 1):
+        key, val = input(f'{num} пара слов: ').lower().split(' - ')
+        dictionary[key] = val
+    return dictionary
+
+
 word_count = int(input('Введите количество пар слов: '))
-
-for i in range(1, word_count + 1):  # Создаем словарь из пар слов синонимов
-    word_list = input(f'{i} пара слов: ').lower().split(' - ')
-    synonym_dict[word_list[0]] = word_list[1]
+synonym_dict = create_synonym_dict(word_count)
 
 while True:
     user_input = input('Введите слово: ')
