@@ -1,12 +1,12 @@
 def no_set(a, b, c, task_num):
-    if task_num == 1:
+    if task_num == 1:  # Выводим на экран елементы, которые есть в каждом списке
         print('Задача 1: ')
         max_array = max(a, b, c)
         print('Решение без множеств: ', end='')
         for elem in max_array:
             if elem in a and elem in b and elem in c:
                 print(elem, end=' ')
-    elif task_num == 2:
+    elif task_num == 2:  # Выводим на экран элементы из первого списка, которых нет во втором и третьем списках
         print('Задача 2: ')
         print('Решение без множеств: ', end='')
         for elem in a:
@@ -15,10 +15,10 @@ def no_set(a, b, c, task_num):
 
 
 def with_set(a, b, c, task_num):
-    if task_num == 1:
+    if task_num == 1:  # Выводим на экран елементы, которые есть в каждом списке
         sim_nums = set(a) & set(b) & set(c)
         print(f'\nРешение с множествами: {sim_nums}')
-    elif task_num == 2:
+    elif task_num == 2:  # Выводим на экран элементы из первого списка, которых нет во втором и третьем списках
         diff_nums = set(a) - (set(b) | set(c))
         print(f'\nРешение с множествами: {diff_nums}')
 
