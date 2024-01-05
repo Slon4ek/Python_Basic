@@ -7,7 +7,7 @@ def check_word(word, dictionary):
 
 
 def synonym(word, dictionary):
-    # Функция выводит на экран синоним к слову word
+    # Функция выводит на экран синоним к слову word из словаря dictionary
     for key, val in dictionary.items():
         if word == key:
             print(f'Синоним: {val.title()}')
@@ -18,6 +18,7 @@ def synonym(word, dictionary):
 
 
 def create_synonym_dict(count):
+    # Функция создает словарь синонимов из пар слов
     dictionary = dict()
     for num in range(1, count + 1):
         key, val = input(f'{num} пара слов: ').lower().split(' - ')

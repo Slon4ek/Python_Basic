@@ -1,4 +1,5 @@
 def processing_orders(num):
+    # Функция создает словарь заказов
     num_word = {
         1: 'Первый',
         2: 'Второй',
@@ -25,6 +26,7 @@ def processing_orders(num):
 
 
 def print_orders(order):
+    # Функция выводит на экран заказы отсортированные по фамилии клиента
     for customer in sorted(order):
         print(f'{customer}: ')
         for pizza in order[customer]:
