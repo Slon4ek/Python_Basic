@@ -9,6 +9,5 @@ new_list = [
     if i < 9 and i % 2 == 0
 ]
 
-print(nums_list)
-print(new_list)
-
+print(f'Оригинальный список: {nums_list}\n'
+      f'Новый список: {new_list}')
