@@ -36,3 +36,13 @@ store = {
 for key, val in goods.items():
     quantity, price = create_total_dict(store, val)
     print(f'{key} - {quantity} штук, стоимость {price} рублей')
+
+
+for i_name in goods.keys():
+    total_quantity = 0
+    total_cost = 0
+    for j_good in store[goods[i_name]]:
+        total_quantity += j_good['quantity']
+        total_cost += j_good['price'] * j_good['quantity']
+    print('{} - {} шт, стоимость {} руб'.format(
+        i_name, total_quantity, total_cost))
