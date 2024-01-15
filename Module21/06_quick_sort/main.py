@@ -1,13 +1,52 @@
-def quick_sort(lst):
-    if not lst:
-        return []
-    support_num = lst[-1]
-    start_list = [num for num in lst if num < support_num]
-    mid_list = [num for num in lst if num == support_num]
-    end_list = [num for num in lst if num > support_num]
-    result = quick_sort(start_list) + mid_list + quick_sort(end_list)
-    return result
+# Function to find the partition position
+def partition(array, low, high):
+    # Choose the rightmost element as pivot
+    pivot = array[high]
+
+    # Pointer for greater element
+    i = low - 1
+
+    # Traverse through all elements
+    # compare each element with pivot
+    for j in range(low, high):
+        if array[j] <= pivot:
+            # If element smaller than pivot is found
+            # swap it with the greater element pointed by i
+            i = i + 1
+
+            # Swapping element at i with element at j
+            (array[i], array[j]) = (array[j], array[i])
+
+    # Swap the pivot element with
+    # e greater element specified by i
+    (array[i + 1], array[high]) = (array[high], array[i + 1])
+
+    # Return the position from where partition is done
+    return i + 1
 
 
-user_list = [5, 8, 9, 4, 2, 9, 1, 8]
-print(quick_sort(user_list))
+# Function to perform quicksort
+
+
+def quick_sort(array, low, high):
+    if low < high:
+        # Find pivot element such that
+        # element smaller than pivot are on the left
+        # element greater than pivot are on the right
+        pi = partition(array, low, high)
+
+        # Recursive call on the left of pivot
+        quick_sort(array, low, pi - 1)
+
+        # Recursive call on the right of pivot
+        quick_sort(array, pi + 1, high)
+
+
+
+# Driver code
+array = [10, 7, 8, 9, 1, 5]
+quick_sort(array, 0, len(array) - 1)
+
+print(f'Sorted array: {array}')
+
+# This code is contributed by Adnan Aliakbar
