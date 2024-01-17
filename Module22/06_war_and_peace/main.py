@@ -3,10 +3,8 @@ import zipfile
 
 def alphabet_generator(start_sym, a_sym_quantity):
     # Функция генерирует строку с алфавитом
-    alpha_str = ''
-    for i in range(1, a_sym_quantity + 1):
-        alpha_str += chr(start_sym) + chr(start_sym).upper()
-        start_sym += 1
+    alpha_str = ''.join(chr(i) + chr(i).upper()
+                        for i in range(start_sym, start_sym + a_sym_quantity))
     return alpha_str
 
 
@@ -14,7 +12,7 @@ def text_analyzer(file_name):
     # Функция анализирует текст из файла и возвращает список букв и сколько раз они встречаются в тексте
     file = open(file_name, 'r', encoding='utf-8')
     text = file.read()
-    ru_alphabet = alphabet_generator(1072, 32)
+    ru_alphabet = alphabet_generator(1072, 32) + 'ёЁ'
     en_alphabet = alphabet_generator(97, 26)
     ru_sym_dict = {(sym, 'ru'): text.count(sym) for sym in ru_alphabet if sym in text}
     en_sym_dict = {(sym, 'en'): text.count(sym) for sym in en_alphabet if sym in text}
