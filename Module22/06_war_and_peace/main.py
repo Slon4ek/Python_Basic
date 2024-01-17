@@ -1,6 +1,24 @@
 import zipfile
 
 
+def write_analyze_in_file(a_list):
+    file_for_write = open('text_analyze.txt', 'w', encoding='utf-8')
+    file_for_write.write('+{:-^19}+\n'.format('+'))
+    file_for_write.write('|{: ^9}|{: ^9}|\n'.format('Буква', 'Частота'))
+    file_for_write.write('+{:-^19}+\n'.format('+'))
+    for line in a_list:
+        char, abbrev = line[0]
+        file_for_write.write('|{: ^9}|{: ^9}|\n'.format(f'{char} [{abbrev}]', line[1]))
+    file_for_write.write('+{:-^19}+'.format('+'))
+
+
+def unzip(file_name):
+    zip_file = zipfile.ZipFile(file_name, 'r')
+    for i_file_name in zip_file.namelist():
+        zip_file.extract(i_file_name)
+    zip_file.close()
+
+
 def alphabet_generator(start_sym, a_sym_quantity):
     # Функция генерирует строку с алфавитом
     alpha_str = ''.join(chr(i) + chr(i).upper()
@@ -9,6 +27,9 @@ def alphabet_generator(start_sym, a_sym_quantity):
 
 
 def text_analyzer(file_name):
+    if file_name.endswith('.zip'):
+        unzip(file_name)
+        file_name = ''.join((file_name[:-3], 'txt'))
     # Функция анализирует текст из файла и возвращает список букв и сколько раз они встречаются в тексте
     file = open(file_name, 'r', encoding='utf-8')
     text = file.read()
@@ -22,15 +43,5 @@ def text_analyzer(file_name):
     return sort_sym
 
 
-my_zip = zipfile.ZipFile('voyna-i-mir.zip', 'r')
-my_zip.extract('voyna-i-mir.txt')
-my_zip.close()
-
-analyze = text_analyzer('voyna-i-mir.txt')
-file_for_write = open('text_analyze.txt', 'w', encoding='utf-8')
-
-for elem in analyze:
-    string = ''.join('{} : {}'.format(elem[0], elem[1]))
-    file_for_write.write(string + '\n')
-
-file_for_write.close()
+analyze = text_analyzer('voyna-i-mir.zip')
+write_analyze_in_file(analyze)
