@@ -27,10 +27,10 @@ def alphabet_generator(start_sym, a_sym_quantity):
 
 
 def text_analyzer(file_name):
+    # Функция анализирует текст из файла и возвращает список букв и сколько раз они встречаются в тексте
     if file_name.endswith('.zip'):
         unzip(file_name)
         file_name = ''.join((file_name[:-3], 'txt'))
-    # Функция анализирует текст из файла и возвращает список букв и сколько раз они встречаются в тексте
     file = open(file_name, 'r', encoding='utf-8')
     text = file.read()
     ru_alphabet = alphabet_generator(1072, 32) + 'ёЁ'
