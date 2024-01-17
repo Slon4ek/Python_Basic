@@ -7,7 +7,7 @@ def output(folder_size_bytes, subfolders_qty, files_qty):
     print("Количество файлов:", files_qty)
 
 
-folder_path = input('Пожалуйста, введите путь до директории: ')
+folder_path = os.path.abspath(os.path.join(os.sep, 'SkillBox Python'))
 files_lst = []
 subdirs = []
 for root, dirs, files in os.walk(folder_path):
