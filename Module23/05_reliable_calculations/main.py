@@ -1,6 +1,13 @@
-# TODO здесь писать код
+import math
 
-# Здесь создайте функцию get_sage_sqrt
+
+def get_sage_sqrt(num):
+    try:
+        return math.sqrt(num)
+    except ValueError as exc:
+        return f'{exc}: число не может быть отрицательным!'
+    except TypeError as exc:
+        return f'{exc}: должно быть число, не строка!'
 
 
 # Тестовые случаи
