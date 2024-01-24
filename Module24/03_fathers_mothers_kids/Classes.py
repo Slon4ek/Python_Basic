@@ -14,6 +14,16 @@ class Kid:
     def __repr__(self):
         return '{} : {}'.format(self.name, self.age)
 
+    def eat(self):
+        if not self.is_full():
+            self.hunger_state -= 1
+        self.print_state()
+
+    def calm_down(self):
+        if not self.is_calm():
+            self.calm_state -= 1
+        self.print_state()
+
     def is_full(self):
         if self.hunger_state == 0:
             return True
@@ -61,13 +71,9 @@ class Parent:
     def feed(self, name):
         for kid in self.kids_list:
             if str(kid.name).lower() == str(name).lower():
-                if kid.hunger_state > 0:
-                    kid.hunger_state -= 1
+                kid.eat()
 
     def calm(self, name):
         for kid in self.kids_list:
             if str(kid.name).lower() == str(name).lower():
-                if kid.calm_state > 0:
-                    kid.calm_state -= 1
-
-
+                kid.calm_down()
