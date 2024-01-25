@@ -1,7 +1,8 @@
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, sym):
         self.name = name
         self.win_count = 0
+        self.sym = sym
 
     def make_a_move(self):
         cell_num = input('Введите номер клетки: ')
