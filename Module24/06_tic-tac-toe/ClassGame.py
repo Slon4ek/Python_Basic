@@ -26,6 +26,7 @@ class Game:
 
     def start_game(self):
         self.board = Board()
+        self.board.print_board()
         for i in range(9):
             if i % 2 == 0:
                 player = self.player_x

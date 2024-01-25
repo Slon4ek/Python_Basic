@@ -14,12 +14,6 @@ class Board:
         else:
             return False
 
-    def is_full(self):
-        for i in self.cells:
-            if i.empty_status:
-                return False
-        return True
-
     def print_board(self):
         print('+---+---+---+')
         print('| {} | {} | {} |'.format(self.cells[0], self.cells[1], self.cells[2]))
@@ -28,16 +22,3 @@ class Board:
         print('+---+---+---+')
         print('| {} | {} | {} |'.format(self.cells[6], self.cells[7], self.cells[8]))
         print('+---+---+---+')
-
-# board = Board()
-# board.is_full()
-# board.cells[0].empty_status = False
-# board.cells[1].empty_status = False
-# board.cells[2].empty_status = False
-# board.cells[3].empty_status = False
-# board.cells[4].empty_status = False
-# board.cells[5].empty_status = False
-# board.cells[6].empty_status = False
-# board.cells[7].empty_status = False
-# board.cells[8].empty_status = True
-# board.is_full()
