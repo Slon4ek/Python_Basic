@@ -39,6 +39,9 @@ class Game:
                 if result:
                     self.end_round()
                     break
+        else:
+            print('Победила дружба :)')
+            self.end_round()
 
     def end_round(self):
         print('Раунд завершен.', end=' ')
