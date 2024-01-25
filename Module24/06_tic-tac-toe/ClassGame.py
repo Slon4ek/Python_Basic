@@ -40,28 +40,6 @@ class Game:
                     self.end_round()
                     break
 
-        # while self.game_status:
-        #     print('Ход игрока {}'.format(self.player_x.name))
-        #     step = self.player_move(self.player_x, self.player_x.sym)
-        #     if step:
-        #         self.board.print_board()
-        #         result = self.check_winner()
-        #         if result:
-        #             self.end_round()
-        #             break
-        #     if self.board.is_full():
-        #         print('Игра окончена.', end=' ')
-        #         self.start_new_game()
-        #         break
-        #     print('Ход игрока {}'.format(self.player_0.name))
-        #     step = self.player_move(self.player_0, self.player_0.sym)
-        #     if step:
-        #         self.board.print_board()
-        #         result = self.check_winner()
-        #         if result:
-        #             self.end_round()
-        #             break
-
     def end_round(self):
         print('Раунд завершен.', end=' ')
         self.start_new_game()
