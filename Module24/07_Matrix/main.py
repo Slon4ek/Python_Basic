@@ -1,6 +1,59 @@
-# TODO здесь писать код
+class Matrix:
+    def __init__(self, row, col):
+        self.row = row
+        self.col = col
+        self.data = []
 
+    def __str__(self):
+        result = ''
+        for i_row in range(self.row):
+            for i, num in enumerate(self.data[i_row]):
+                result += ''.join('{: ^3}'.format(str(num)))
+            result += '\n'
+        return result
 
+    def add(self, other):
+        result = Matrix(self.row, self.col)
+        try:
+            result.data = [
+                [self.data[i_row][i_col] + other.data[i_row][i_col]
+                 for i_col in range(self.col)]
+                for i_row in range(self.row)
+            ]
+        except IndexError:
+            print('Операция сложения применима только к матрицам одинакового размера!')
+            return None
+        return result
+
+    def subtract(self, other):
+        result = Matrix(self.row, self.col)
+        try:
+            result.data = [
+                [self.data[i_row][i_col] - other.data[i_row][i_col]
+                 for i_col in range(self.col)]
+                for i_row in range(self.row)
+            ]
+        except IndexError:
+            print('Операция вычитание применима только к матрицам одинакового размера!')
+            return None
+        return result
+
+    def multiply(self, other):
+        result = Matrix(self.row, other.col)
+        result.data = [
+            [None for _ in range(other.col)] for _ in range(self.row)
+        ]
+        for i in range(self.row):
+            for j in range(other.col):
+                result.data[i][j] = sum(self.data[i][k] * other.data[k][j] for k in range(other.row))
+        return result
+
+    def transpose(self):
+        result = Matrix(self.col, self.row)
+        result.data = [
+            [self.data[i][j] for i in range(self.row)] for j in range(self.col)
+        ]
+        return result
 
 
 # Примеры работы с классом:
