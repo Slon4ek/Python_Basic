@@ -44,6 +44,7 @@ class Life:
                 raise GluttonyError('Обжираться нельзя, карма от этого не увеличивается :(')
             elif exception_num == 5:
                 raise DepressionError('Депрессия, карма от этого не увеличивается :(')
+            return 0
         else:
             return random.randint(1, 7)
 
