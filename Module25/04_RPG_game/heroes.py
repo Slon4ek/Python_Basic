@@ -96,7 +96,8 @@ class Healer(Hero):
     def make_a_move(self, friends, enemies):
         print(self.name, end=' ')
         min_health = min([friend.get_hp() for friend in friends])
-        if min_health < 140:
+        min_enemy_hp = min([enemy.get_hp() for enemy in enemies])
+        if min_health < 120:
             for friend in friends:
                 if friend.get_hp() == min_health:
                     self.healing(friend)
@@ -105,8 +106,10 @@ class Healer(Hero):
         else:
             if not enemies:
                 return
-            print("Атакую ближнего -", enemies[0].name)
-            self.attack(enemies[0])
+            for enemy in enemies:
+                if enemy.get_hp == min_enemy_hp:
+                    print("Атакую -", enemy.name)
+                    self.attack(enemy)
         print('\n')
 
 
@@ -153,7 +156,7 @@ class Tank(Hero):
 
     def make_a_move(self, friends, enemies):
         print(self.name, end=' ')
-        if self.get_hp() < 140:
+        if self.get_hp() < 120:
             self.raise_the_shield()
         else:
             self.lower_the_shield()
