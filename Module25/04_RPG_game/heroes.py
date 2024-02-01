@@ -153,14 +153,20 @@ class Tank(Hero):
 
     def make_a_move(self, friends, enemies):
         print(self.name, end=' ')
-        if self.get_hp() < 120:
+        if self.get_hp() < 140:
             self.raise_the_shield()
         else:
             self.lower_the_shield()
         if not enemies:
             return
-        print("Атакую ближнего -", enemies[0].name)
-        self.attack(enemies[0])
+        for enemy in enemies:
+            if isinstance(enemy, monsters.MonsterBerserk):
+                print('Атакую Берсерка!')
+                self.attack(enemy)
+                break
+        else:
+            print("Атакую ближнего -", enemies[0].name)
+            self.attack(enemies[0])
         print('\n')
 
 
@@ -179,7 +185,7 @@ class Attacker(Hero):
     # усиление, ослабление) на выбранную им цель
     def __init__(self, name):
         super().__init__(name)
-        self.power_multiply = 5
+        self.power_multiply = 4
 
     def __str__(self):
         return 'Name: {0} | HP: {1}'.format(self.name, round(self.get_hp()))
@@ -200,12 +206,16 @@ class Attacker(Hero):
 
     def make_a_move(self, friends, enemies):
         print(self.name, end=' ')
-        if self.power_multiply < 3:
+        if self.power_multiply <= 2:
             self.power_up()
             print('Каст усиления')
         else:
             for enemy in enemies:
-                if enemy.get_hp() > self.get_power() * self.power_multiply:
+                if isinstance(enemy, monsters.MonsterBerserk) and enemy.get_hp() < 50:
+                    print('Атакую безумного Берсерка!')
+                    self.attack(enemy)
+                    break
+                elif enemy.get_hp() > self.get_power() * self.power_multiply:
                     print('Атакую -', enemy.name)
                     self.attack(enemy)
                     break
