@@ -1,4 +1,5 @@
 import random
+import monsters
 
 
 class Hero:
@@ -50,7 +51,8 @@ class Hero:
     def take_damage(self, damage):
         # Каждый наследник будет получать урон согласно правилам своего класса
         # При этом у всех наследников есть общая логика, которая определяет жив ли объект.
-        print("\t", self.name, "Получил удар с силой равной = ", round(damage), ". Осталось здоровья - ", round(self.get_hp()))
+        print("\t", self.name, "Получил удар с силой равной = ", round(damage), ". Осталось здоровья - ",
+              round(self.get_hp()))
         # Дополнительные принты помогут вам внимательнее следить за боем и изменять стратегию, чтобы улучшить выживаемость героев
         if self.get_hp() <= 0:
             self.__is_alive = False
@@ -74,6 +76,49 @@ class Healer(Hero):
     # - исцеление - увеличивает здоровье цели на величину равную своей магической силе
     # - выбор действия - получает на вход всех союзников и всех врагов и на основе своей стратегии выполняет ОДНО из действий (атака,
     # исцеление) на выбранную им цель
+    def __init__(self, name):
+        super().__init__(name)
+        self.__magic_power = self.get_power() * 3
+
+    def __str__(self):
+        return 'Name: {0} | HP: {1}'.format(self.name, round(self.get_hp()))
+
+    def get_magic_power(self):
+        return self.__magic_power
+
+    def attack(self, target):
+        target.take_damage(self.get_power() / 2)
+
+    def take_damage(self, damage):
+        self.set_hp(self.get_hp() - damage * 1.2)
+        super().take_damage(damage)
+
+    def healing(self, target):
+        target.set_hp(target.get_hp() + self.get_magic_power())
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        if friends[0].get_hp() < 120:
+            self.healing(friends[0])
+            print("Исцеляю", friends[0].name, 'Текущий уровень здоровья: ', round(friends[0].get_hp()))
+        elif friends[1].get_hp() < 120:
+            self.healing(friends[1])
+            print("Исцеляю", friends[1].name, 'Текущий уровень здоровья: ', round(friends[1].get_hp()))
+        elif friends[2].get_hp() < 120:
+            self.healing(friends[1])
+            print("Исцеляю", friends[2].name, 'Текущий уровень здоровья: ', round(friends[2].get_hp()))
+        elif friends[3].get_hp() < 120:
+            self.healing(friends[1])
+            print("Исцеляю", friends[3].name, 'Текущий уровень здоровья: ', round(friends[3].get_hp()))
+        elif friends[4].get_hp() < 120:
+            self.healing(friends[4])
+            print("Исцеляю", friends[4].name, 'Текущий уровень здоровья: ', round(friends[4].get_hp()))
+        else:
+            if not enemies:
+                return
+            print("Атакую ближнего -", enemies[0].name)
+            self.attack(enemies[0])
+        print('\n')
 
 
 class Tank(Hero):
@@ -88,6 +133,48 @@ class Tank(Hero):
     # - опустить щит - если щит поднят - опускает щит. Это уменьшает показатель брони в 2 раза, но увеличивает показатель силы в 2 раза.
     # - выбор действия - получает на вход всех союзников и всех врагов и на основе своей стратегии выполняет ОДНО из действий (атака,
     # поднять щит/опустить щит) на выбранную им цель
+    def __init__(self, name):
+        super().__init__(name)
+        self.__defense = 1
+        self.shield_raise = False
+
+    def __str__(self):
+        return 'Name: {0} | HP: {1}'.format(self.name, round(self.get_hp()))
+
+    def get_defense(self):
+        return self.__defense
+
+    def set_defense(self, new_defense):
+        self.__defense = max(new_defense, 0)
+
+    def attack(self, target):
+        target.take_damage(self.get_power() / 2)
+
+    def take_damage(self, damage):
+        self.set_hp(self.get_hp() - damage / self.get_defense())
+        super().take_damage(damage)
+
+    def raise_the_shield(self):
+        self.shield_raise = True
+        self.set_defense(self.get_defense() * 2)
+        self.set_power(self.get_power() / 2)
+
+    def lower_the_shield(self):
+        self.shield_raise = False
+        self.set_defense(self.get_defense() / 2)
+        self.set_power(self.get_power() * 2)
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        if self.get_hp() < self.max_hp / 2:
+            self.raise_the_shield()
+        else:
+            self.lower_the_shield()
+        if not enemies:
+            return
+        print("Атакую ближнего -", enemies[0].name)
+        self.attack(enemies[0])
+        print('\n')
 
 
 class Attacker(Hero):
@@ -103,3 +190,38 @@ class Attacker(Hero):
     # - ослабление (power_down) - уменьшает коэффициента усиления урона в 2 раза
     # - выбор действия - получает на вход всех союзников и всех врагов и на основе своей стратегии выполняет ОДНО из действий (атака,
     # усиление, ослабление) на выбранную им цель
+    def __init__(self, name):
+        super().__init__(name)
+        self.power_multiply = 5
+
+    def __str__(self):
+        return 'Name: {0} | HP: {1}'.format(self.name, round(self.get_hp()))
+
+    def attack(self, target):
+        target.take_damage(self.get_power() * self.power_multiply)
+        self.power_down()
+
+    def take_damage(self, damage):
+        self.set_hp(self.get_hp() - damage * (self.power_multiply / 2))
+        super().take_damage(damage)
+
+    def power_up(self):
+        self.power_multiply *= 2
+
+    def power_down(self):
+        self.power_multiply /= 2
+
+    def make_a_move(self, friends, enemies):
+        print(self.name, end=' ')
+        for enemy in enemies:
+            if isinstance(enemy, monsters.MonsterBerserk):
+                if enemy.madness > 2:
+                    enemy.set_power(enemy.get_power() / self.power_multiply)
+                    return
+        if not enemies:
+            return
+        else:
+            print("Атакую ближнего -", enemies[0].name)
+            self.attack(enemies[0])
+        print('\n')
+
