@@ -52,7 +52,7 @@ class Life:
 life = Life()
 with open('karma.log', 'w', encoding='utf-8') as log_file:
     day_count = 0
-    while life.current_karma != life.get_karma():
+    while life.current_karma < life.get_karma():
         try:
             life.current_karma += life.one_day()
             print('Прошел очередной день.\n\tКоличество кармы: {}'.format(life.current_karma))
