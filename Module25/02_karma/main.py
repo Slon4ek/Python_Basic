@@ -2,23 +2,28 @@ import random
 
 
 class KillError(Exception):
-    pass
+    def __init__(self):
+        super().__init__('Убивать нельзя, карма от этого не увеличивается :(')
 
 
 class DrunkError(Exception):
-    pass
+    def __init__(self):
+        super().__init__('Пить нельзя, карма от этого не увеличивается :(')
 
 
 class CarCrashError(Exception):
-    pass
+    def __init__(self):
+        super().__init__('Сломалась машина, карма от этого не увеличивается :(')
 
 
 class GluttonyError(Exception):
-    pass
+    def __init__(self):
+        super().__init__('Обжираться нельзя, карма от этого не увеличивается :(')
 
 
 class DepressionError(Exception):
-    pass
+    def __init__(self):
+        super().__init__('Депрессия, карма от этого не увеличивается :(')
 
 
 class Life:
@@ -35,15 +40,15 @@ class Life:
         exception_num = random.randint(1, 5)
         if num == 5:
             if exception_num == 1:
-                raise KillError('Убивать нельзя, карма от этого не увеличивается :(')
+                raise KillError
             elif exception_num == 2:
-                raise DrunkError('Пить нельзя, карма от этого не увеличивается :(')
+                raise DrunkError
             elif exception_num == 3:
-                raise CarCrashError('Сломалась машина, карма от этого не увеличивается :(')
+                raise CarCrashError
             elif exception_num == 4:
-                raise GluttonyError('Обжираться нельзя, карма от этого не увеличивается :(')
+                raise GluttonyError
             elif exception_num == 5:
-                raise DepressionError('Депрессия, карма от этого не увеличивается :(')
+                raise DepressionError
             return 0
         else:
             return random.randint(1, 7)
