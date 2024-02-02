@@ -1,70 +1,51 @@
 class Stack:
     def __init__(self):
-        self.stack_lst = []
+        self.__stack_lst = []
 
     def __str__(self):
-        if self.stack_lst:
-            sack_str = ' '.join(str(elem) for elem in self.stack_lst)
-            return sack_str
-        else:
-            return str(self.stack_lst)
+        return ', '.join(self.__stack_lst)
 
-    def add(self, *args):
-        for arg in args:
-            self.stack_lst.append(arg)
-        return self.stack_lst
+    def add(self, elem):
+        self.__stack_lst.append(elem)
 
     def pop(self):
-        if self.stack_lst:
-            elem = self.stack_lst.pop(-1)
-            return elem
+        if self.__stack_lst:
+            return self.__stack_lst.pop()
         else:
-            return self.stack_lst
+            return None
 
-    def clear(self):
-        self.stack_lst = []
-        return self.stack_lst
+    def is_empty(self):
+        if not self.__stack_lst:
+            return True
 
 
 class TaskManager:
     def __init__(self):
-        self.dict = {}
-        self.task = Stack()
+        self.task = dict()
 
     def __str__(self):
-        string = ''
-        for key, val in sorted(self.dict.items()):
-            if not isinstance(val, list):
-                string += ''.join('{key}: {val}\n'.format(key=key, val=val))
-            else:
-                val_str = ', '.join(val)
-                string += ''.join('{}: {}\n'.format(key, val_str))
-        return string
+        display = []
+        if self.task:
+            for i_priority in sorted(self.task.keys()):
+                display.append('{prior}: {task}\n'.format(
+                    prior=str(i_priority),
+                    task=self.task[i_priority]
+                ))
+        return ''.join(display)
 
     def add_task(self, task, priority):
-        if task in self.dict.values():
-            return
-        if priority not in self.dict.keys():
-            self.dict[priority] = task
-        else:
-            self.dict[priority] = self.task.add(self.dict[priority], task)
-            self.task.clear()
+        if priority not in self.task:
+            self.task[priority] = Stack()
+        self.task[priority].add(task)
 
     def pop(self, key):
-        if key in self.dict:
-            if not isinstance(self.dict[key], list):
-                pop_item = self.dict.pop(key)
-                return pop_item
-            else:
-                for elem in self.dict[key]:
-                    self.task.add(elem)
-                pop_task = self.task.pop()
-                if self.task.stack_lst:
-                    self.dict[key] = self.task.stack_lst
-                else:
-                    self.dict.pop(key)
-                self.task.clear()
-                return pop_task
+        if key in self.task:
+            elem = self.task[key].pop()
+            if self.task[key].is_empty():
+                del self.task[key]
+            return elem
+        else:
+            return None
 
 
 task_manager = TaskManager()
@@ -75,15 +56,12 @@ task_manager.add_task("поесть", 2)
 task_manager.add_task("сдать ДЗ", 2)
 print(task_manager)
 task_manager.pop(4)
-print()
 print(task_manager)
 task_manager.pop(4)
-print()
 print(task_manager)
 task_manager.pop(2)
-print()
 print(task_manager)
 task_manager.pop(2)
-print()
 print(task_manager)
 task_manager.pop(1)
+print(task_manager)
