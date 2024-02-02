@@ -6,7 +6,8 @@ class Stack:
         return ', '.join(self.__stack_lst)
 
     def add(self, elem):
-        self.__stack_lst.append(elem)
+        if elem not in self.__stack_lst:
+            self.__stack_lst.append(elem)
 
     def pop(self):
         if self.__stack_lst:
