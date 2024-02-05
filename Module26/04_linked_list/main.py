@@ -18,7 +18,7 @@ class LinkedList:
         self.__length = 0
         self.__cur_node = None
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.head is not None:
             current = self.head
             values = [str(current.value)]

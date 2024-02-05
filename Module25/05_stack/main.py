@@ -18,6 +18,8 @@ class Stack:
     def is_empty(self):
         if not self.__stack_lst:
             return True
+        else:
+            return None
 
 
 class TaskManager:

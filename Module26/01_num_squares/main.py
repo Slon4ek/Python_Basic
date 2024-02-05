@@ -13,7 +13,7 @@ class SquaresOfNumbers:
         return self.start ** 2
 
 
-def square(n):
+def square(n) -> int:
     start_num = 1
     for num in range(n):
         yield start_num ** 2

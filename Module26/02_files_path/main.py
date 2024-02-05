@@ -1,7 +1,7 @@
 import os
 
 
-def gen_files_path(directory: str, path=os.path.abspath(os.sep)):
+def gen_files_path(directory: str, path: str = os.path.abspath(os.sep)) -> str:
     for root, dirs, files in os.walk(path):
         for dir_name in dirs:
             if dir_name == directory:
