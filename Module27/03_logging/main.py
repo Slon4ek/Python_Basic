@@ -29,7 +29,7 @@ def logging(foo: Callable) -> Callable:
             with open('errors.log', 'a', encoding='utf-8') as log_file:
                 print('Ошибка выполнения функции! Описание ошибки записано в файл errors.log')
                 log_file.write(f'{now}: Ошибка при выполнении функции '
-                               f'{foo.__name__}.\n\tОписание ошибки: {str(type(exc))}\n')
+                               f'{foo.__name__}.\n\tОписание ошибки: {str(type(exc))} --> {str(exc)}\n')
 
     return wrapper
 
