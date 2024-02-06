@@ -1,5 +1,6 @@
-import functools, datetime, time, os
-from typing import Callable, Any
+import functools
+import os
+from typing import Callable
 
 
 def logging(foo: Callable) -> Callable:
@@ -11,6 +12,8 @@ def logging(foo: Callable) -> Callable:
 
     @functools.wraps(foo)
     def wrapper(*args, **kwargs):
+        import datetime
+        now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         print('Выполняется функция:\n\t{func_name}\nДокументация:\n\t{docstring}'.format(
             func_name=foo.__name__,
             docstring=foo.__doc__
@@ -18,12 +21,15 @@ def logging(foo: Callable) -> Callable:
         try:
             result = foo(*args, **kwargs)
             print('Функция отработала успешно!\n')
-            return result
-        except BaseException as exc:
-            with open('errors.log', 'a') as log_file:
+            if not result:
+                return foo
+            else:
+                return result
+        except Exception as exc:
+            with open('errors.log', 'a', encoding='utf-8') as log_file:
                 print('Ошибка выполнения функции! Описание ошибки записано в файл errors.log')
-                log_file.write(f'{datetime.datetime.today()}: Ошибка при выполнении функции '
-                               f'{foo.__name__}.\nОписание ошибки: {str(type(exc))}')
+                log_file.write(f'{now}: Ошибка при выполнении функции '
+                               f'{foo.__name__}.\n\tОписание ошибки: {str(type(exc))}\n')
 
     return wrapper
 
@@ -55,8 +61,12 @@ def gen_files_path(directory: str, path: str = os.path.abspath(os.sep)) -> str:
                     yield path_to_file
 
 
-for files_path in gen_files_path('Python_Basic'):
-    print(files_path)
+@logging
+def error_def():
+    x = 1 / 0
+    return x
 
-res = square(10)
-print(res)
+
+gen_files_path('Python_Basi')
+square(10)
+error_def()
