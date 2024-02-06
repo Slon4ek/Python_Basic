@@ -44,6 +44,7 @@ class LinkedList:
         new_node = Node(elem)
         if self.head is None:
             self.head = new_node
+            self.__length += 1
             return
         last = self.head
         while last.next_node:
@@ -76,8 +77,7 @@ class LinkedList:
     def get(self, index: int) -> Node:
         cur_node = self.head
         cur_index = 0
-        prev = None
-        if self.__length == 0 or self.__length < index:
+        if self.__length == 0 or self.__length <= index:
             raise IndexError
         if cur_node is not None:
             if index == 0:
@@ -99,6 +99,6 @@ my_list.append(40)
 print(my_list)
 my_list.remove(1)
 print(my_list)
-print(my_list.get(1))
+print(my_list.get(2))
 for i in my_list:
     print(i)
