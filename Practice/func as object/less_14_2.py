@@ -1,8 +1,8 @@
-import time
-from typing import Callable, Any
-import random
 import datetime
 import functools
+import random
+import time
+from typing import Callable
 
 
 def timer(foo: Callable) -> Callable:

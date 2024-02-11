@@ -1,5 +1,5 @@
-from typing import Callable, Any, Dict
 import functools
+from typing import Callable, Dict
 
 
 def get_some_salad(func: Callable) -> Callable:
