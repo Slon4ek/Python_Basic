@@ -13,7 +13,7 @@ class Date:
         self._month = month
         self._year = year
 
-    def __str__(self):
+    def __str__(self) -> str:
         return 'День: {} Месяц: {} Год: {}'.format(
             self._day,
             self._month,
@@ -45,18 +45,18 @@ class Date:
         self._year = val
 
     @classmethod
-    def from_string(cls, string: str) -> 'Date':
-        if cls.is_date_valid(string):
-            day, month, year = string.split('-')
+    def from_string(cls, date: str) -> 'Date':
+        if cls.is_date_valid(date):
+            day, month, year = date.split('-')
             return Date(day, month, year)
         else:
             raise DateException
 
     @classmethod
-    def is_date_valid(cls, string: str) -> bool:
-        day, month, year = string.split('-')
+    def is_date_valid(cls, date: str) -> bool:
+        day, month, year = date.split('-')
         day, month, year = int(day), int(month), int(year)
-        if 1 > month > 12:
+        if month not in range(1, 13):
             return False
         elif day < 1:
             return False
@@ -69,7 +69,7 @@ class Date:
         return True
 
 
-date = Date.from_string('10-12-2077')
-print(date)
-print(Date.is_date_valid('10-12-2077'))
+my_date = Date.from_string('10-12-2077')
+print(my_date)
+print(Date.is_date_valid('10-13-2077'))
 print(Date.is_date_valid('40-12-2077'))
