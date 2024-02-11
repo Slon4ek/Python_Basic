@@ -17,8 +17,9 @@ class File:
         return self.file
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
+        if exc_type:
+            return True
         self.file.close()
-        return True
 
 
 with File('asd.txt', 'w') as file:

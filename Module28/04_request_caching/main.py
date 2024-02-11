@@ -40,7 +40,6 @@ class LRUCache:
     def print_cache(self) -> None:
         """
         Метод выводит на экран содержимое кэша
-        :return:
         """
         for key, val in self._cache.items():
             print(f'{key}: {val}')
