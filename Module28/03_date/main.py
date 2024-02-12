@@ -47,15 +47,14 @@ class Date:
     @classmethod
     def from_string(cls, date: str) -> 'Date':
         if cls.is_date_valid(date):
-            day, month, year = date.split('-')
+            day, month, year = map(int, date.split('-'))
             return Date(day, month, year)
         else:
             raise DateException
 
     @classmethod
     def is_date_valid(cls, date: str) -> bool:
-        day, month, year = date.split('-')
-        day, month, year = int(day), int(month), int(year)
+        day, month, year = map(int, date.split('-'))
         if month not in range(1, 13):
             return False
         elif day < 1:
