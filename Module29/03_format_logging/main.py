@@ -4,12 +4,12 @@ from datetime import datetime
 import time
 
 
-def log_methods(date: str) -> Callable:
+def log_methods(date_format: str) -> Callable:
     def logger(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             date_str = ''
-            for sym in date:
+            for sym in date_format:
                 if sym.isalpha():
                     date_str += f'%{sym}'
                     continue
@@ -22,11 +22,11 @@ def log_methods(date: str) -> Callable:
                 else:
                     date_str += f'{sym}'
             today = datetime.now().strftime(date_str)
-            print(f'Запускается {func.__name__}. '
+            print(f'Запускается {str(func).split()[1]}. '
                   f'Дата и время запуска: {today}.')
             start = time.time()
             result = func(*args, **kwargs)
-            print(f'Завершние {func.__name__}, время работы = {time.time() - start}')
+            print(f'Завершение {str(func).split()[1]}, время работы = {time.time() - start}')
             return result
 
         return wrapper
@@ -34,7 +34,20 @@ def log_methods(date: str) -> Callable:
     return logger
 
 
-#@log_methods("b d Y - H:M:S")
+def for_all(decorator):
+    def decorate(cls):
+        for i_method_name in dir(cls):
+            if i_method_name.startswith('__') is False:
+                curr_method = getattr(cls, i_method_name)
+                decor_method = decorator(curr_method)
+                setattr(cls, i_method_name, decor_method)
+            return cls
+
+    return decorate
+
+
+# @log_methods("b d Y - H:M:S")
+# @for_all
 class A:
     @log_methods("b d Y - H:M:S")
     def test_sum_1(self) -> int:
@@ -47,7 +60,8 @@ class A:
         return result
 
 
-#@log_methods("b d Y - H:M:S")
+# @log_methods("b d Y - H:M:S")
+# @for_all
 class B(A):
     @log_methods("b d Y - H:M:S")
     def test_sum_1(self):
