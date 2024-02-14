@@ -26,7 +26,7 @@ def log_methods(date: str) -> Callable:
                   f'Дата и время запуска: {today}.')
             start = time.time()
             result = func(*args, **kwargs)
-            print(f'Время работы функции: {time.time() - start}')
+            print(f'Завершние {func.__name__}, время работы = {time.time() - start}')
             return result
 
         return wrapper
@@ -36,6 +36,7 @@ def log_methods(date: str) -> Callable:
 
 #@log_methods("b d Y - H:M:S")
 class A:
+    @log_methods("b d Y - H:M:S")
     def test_sum_1(self) -> int:
         print('test sum 1')
         number = 100
