@@ -3,9 +3,9 @@ import functools
 
 def singleton(cls):
     @functools.wraps(cls)
-    def wrapper():
+    def wrapper(*args, **kwargs):
         if cls.instance is None:
-            cls.instance = cls()
+            cls.instance = cls(*args, **kwargs)
         return cls.instance
 
     cls.instance = None
