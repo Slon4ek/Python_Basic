@@ -35,10 +35,11 @@ def log_methods(date_format: str) -> Callable:
         for method in dir(cls):
             if not method.startswith('__'):
                 curr_method = getattr(cls, method)
-                decorated_method = logging(curr_method,
-                                           date_format=date_format,
-                                           name_prefix=cls.__name__)
-                setattr(cls, method, decorated_method)
+                if hasattr(curr_method, '__call__'):
+                    decorated_method = logging(curr_method,
+                                               date_format=date_format,
+                                               name_prefix=cls.__name__)
+                    setattr(cls, method, decorated_method)
         return cls
 
     return decorate
