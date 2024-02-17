@@ -2,23 +2,22 @@ import functools
 from typing import Callable
 
 
-def decorator_with_args_for_any_decorator(func: Callable) -> Callable:
-    def decorator(*args, **kwargs):
-        @functools.wraps(func)
-        def wrapper(func: Callable) -> Callable:
-            print(f'Переданные арги и кварги в декоратор: {args} {kwargs}')
-            return func
+def decorator_with_args_for_any_decorator(decorator_to_enhance: Callable) -> Callable:
+    def decorator_maker(*args, **kwargs) -> Callable:
+        def decorator_wrapper(func: Callable) -> Callable:
+            return decorator_to_enhance(func, *args, **kwargs)
 
-        return wrapper
+        return decorator_wrapper
 
-    return decorator
+    return decorator_maker
 
 
 @decorator_with_args_for_any_decorator
-def decorated_decorator(func: Callable):
+def decorated_decorator(func: Callable, *dec_args, **dec_kwargs):
     @functools.wraps(func)
-    def wrapper(func: Callable) -> Callable:
-        return func()
+    def wrapper(*func_args, **func_kwargs) -> Callable:
+        print(f'Переданные арги и кварги в декоратор: {dec_args} {dec_kwargs}')
+        return func(*func_args, **func_kwargs)
 
     return wrapper
 
