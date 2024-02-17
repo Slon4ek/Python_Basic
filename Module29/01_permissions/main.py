@@ -8,7 +8,7 @@ def check_permission(user: str) -> Callable:
         def wrapper(*args, **kwargs):
             if user.title() in user_permission:
                 print(f'Access granted: coll function {func.__name__}')
-                return func()
+                return func(*args, **kwargs)
             else:
                 print(f'PermissionError: у пользователя недостаточно прав, чтобы выполнить функцию {func.__name__}')
 

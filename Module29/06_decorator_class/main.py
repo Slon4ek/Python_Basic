@@ -1,4 +1,26 @@
-# TODO здесь писать код
+from typing import Callable
+import time
+
+
+class LoggerDecorator:
+    def __init__(self, func: Callable) -> None:
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        start = time.time()
+        func_result = self.func(*args, **kwargs)
+        end = time.time()
+        print('Вызов функции {name}\n'
+              'Аргументы: {args}, {kwargs}\n'
+              'Результат: {res}\n'
+              'Время выполнения: {time} секунд'.format(
+                name=self.func.__name__,
+                args=args,
+                kwargs=kwargs,
+                res=func_result,
+                time=end - start
+                ))
+        return func_result
 
 
 @LoggerDecorator
