@@ -1,5 +1,4 @@
 from collections import Counter
-from functools import reduce
 
 
 def can_be_poly(string):
