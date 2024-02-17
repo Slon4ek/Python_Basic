@@ -1,4 +1,8 @@
-# TODO здесь писать код
+def count_unique_characters(string: str) -> int:
+    string = string.lower()
+    result = list(filter(lambda x: string.count(x) == 1, string))
+    print(result)
+    return len(result)
 
 
 # Пример использования:
