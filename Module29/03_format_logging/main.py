@@ -1,55 +1,51 @@
-from typing import Callable
+import time
 import functools
 from datetime import datetime
-import time
+from typing import Callable
 
 
-def log_methods(date_format: str) -> Callable:
+def logging(_func: Callable = None, *, date_format: str, name_prefix: str = '') -> Callable:
     def logger(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            date_str = ''
-            for sym in date_format:
+            date_str = date_format
+            for sym in date_str:
                 if sym.isalpha():
-                    date_str += f'%{sym}'
-                    continue
-                if len(sym) > 1:
-                    for i in sym:
-                        if i.isalpha():
-                            date_str += f'%{i}'
-                        else:
-                            date_str += i
-                else:
-                    date_str += f'{sym}'
-            today = datetime.now().strftime(date_str)
-            print(f'Запускается {str(func).split()[1]}. '
-                  f'Дата и время запуска: {today}.')
+                    date_str = date_str.replace(sym, '%' + sym)
+
+            print(f"Запускается '{name_prefix}.{func.__name__}'. "
+                  f"Дата и время запуска: {datetime.now().strftime(date_str)}")
             start = time.time()
             result = func(*args, **kwargs)
-            print(f'Завершение {str(func).split()[1]}, время работы = {time.time() - start}')
+            end = time.time()
+            print(f"Завершение '{name_prefix}.{func.__name__}', "
+                  f"время работы = {round(end - start, 3)} сек.")
             return result
 
         return wrapper
 
-    return logger
+    if _func is None:
+        return logger
+    else:
+        return logger(_func)
 
 
-def for_all(decorator):
+def log_methods(date_format: str) -> Callable:
     def decorate(cls):
-        for i_method_name in dir(cls):
-            if i_method_name.startswith('__') is False:
-                curr_method = getattr(cls, i_method_name)
-                decor_method = decorator(curr_method)
-                setattr(cls, i_method_name, decor_method)
-            return cls
+        for method in dir(cls):
+            if not method.startswith('__'):
+                curr_method = getattr(cls, method)
+                decorated_method = logging(curr_method,
+                                           date_format=date_format,
+                                           name_prefix=cls.__name__)
+                setattr(cls, method, decorated_method)
+        return cls
 
     return decorate
 
 
-# @log_methods("b d Y - H:M:S")
-# @for_all
+@log_methods("b d Y - H:M:S")
 class A:
-    @log_methods("b d Y - H:M:S")
     def test_sum_1(self) -> int:
         print('test sum 1')
         number = 100
@@ -60,15 +56,12 @@ class A:
         return result
 
 
-# @log_methods("b d Y - H:M:S")
-# @for_all
+@log_methods("b d Y - H:M:S")
 class B(A):
-    @log_methods("b d Y - H:M:S")
     def test_sum_1(self):
         super().test_sum_1()
         print("Наследник test sum 1")
 
-    @log_methods("b d Y - H:M:S")
     def test_sum_2(self):
         print("test sum 2")
         number = 200
