@@ -1,7 +1,7 @@
 import json
 
 
-def find_diff(old_dict, new_dict, diff_lst, diff_dict=None):
+def find_diff(old_dict: dict, new_dict: dict, diff_lst: list, diff_dict: dict = None) -> dict:
     if diff_dict is None:
         diff_dict = dict()
         for i_key in new_dict.keys():

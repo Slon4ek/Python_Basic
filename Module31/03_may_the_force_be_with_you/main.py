@@ -2,7 +2,7 @@ import json
 import requests
 
 
-def pilots_info(url):
+def pilots_info(url: str) -> dict:
     result = requests.get(url).json()
     return {'name': result['name'],
             'height': result['height'],
@@ -12,12 +12,12 @@ def pilots_info(url):
             }
 
 
-def planet_info(url):
+def planet_info(url: str) -> str:
     result = requests.get(url).json()
     return result['name']
 
 
-def search_info(ship_name):
+def search_info(ship_name: str) -> dict:
     lst = ['starships', 'planets', 'films', 'species', 'vehicles', 'people']
     ship_info = dict()
     for i_inf in lst:
